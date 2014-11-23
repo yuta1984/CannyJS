@@ -31,7 +31,7 @@ You can give some optional parameters to `CannyJS.canny` method:
 
 `ht` and `lt` represent high and low threshold values that will be used in hysteresis thresholding procedure. Both `sigmma` and `kernalSize` are parameters used in Gaussian blur process (note that `kernelSize` must be an odd number).
 
-## Other API
+## Other APIs
 You can also call methods that perform each step of Canny edge detection: gaussian blur, sobel filtering, non-maximum suppression and hysteresis thresholding. Since these methods all receive and return `GrayImageData` objects, you first need to build an instance and make it load image data:
 
 ```javascript
@@ -46,10 +46,9 @@ Available methods are as follows:
 
 ```javascript
 	// apply Gaussian filter 
-	CannyJS.gaussianBlur(imageData, [sigmma=1.4], [kernelSize=5]);
-	blur.drawOn(canvas);
+	CannyJS.gaussianBlur(imageData, [sigmma=1.4], [kernelSize=5])
 	// apply sobel filter
-	CannyJS.sobel(blur);
+	CannyJS.sobel(blur)
 	// apply non-Maximum suppression
 	CannyJS.nonMaximumSuppression(sobel)
 	// apply hysteresis thresholding
@@ -57,7 +56,7 @@ Available methods are as follows:
 ```
 
 ## Performance
-From waht I tested CannyJS takes 3-4 seconds to perform edge-detection on an image with size 600x400 (tested on Chrome 38 on MacBookAir). Because I wrote this library in CoffeeScript I have difficulties in optimizing the generated code for better performances. Any suggestion or fix will be appreciated (perhaps I better rewrite it in native JavaScript?).
+From what I tested CannyJS takes 3-4 seconds to perform edge-detection on an image with size 600x400 (tested on Chrome 38 on MacBookAir). Because I wrote this library in CoffeeScript I have difficulties in optimizing the generated code for better performance. Any suggestion or fix will be appreciated (perhaps I better rewrite it in native JavaScript?).
 
 ## License
 MIT License.

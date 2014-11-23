@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>CannyJS demo</title>
+  <script src="../canny.js"></script>
+  <script type="text/javascript">
+    window.onload = function(){
+      var canvas1 = document.getElementById('canvas1');
+      var canvas2 = document.getElementById('canvas2');    
+      var ctx = canvas1.getContext('2d');
+      var image1Btn = document.getElementById("image1");
+      var image2Btn = document.getElementById("image2");
+      var image3Btn = document.getElementById("image3");
+      var htInput = document.getElementById("high-threshold");
+      var ltInput = document.getElementById("low-threshold");
+      var sigmmaInput = document.getElementById("sigmma");
+      var kernelSizeInput = document.getElementById("kernelSize");    
+      var executeBtn = document.getElementById("execute");
+      
+      var loadImage = function(url){
+        var img = new Image();
+        img.src=url
+        img.onload= function(){
+          canvas1.width = img.width;
+          canvas2.width = img.width;
+          canvas1.height = img.height;
+          canvas2.height = img.height;
+          ctx.drawImage(img,0,0);    
+        }
+      }
+      var onButtonClick = function(e){
+        loadImage(e.target.value);
+      }
+      image1Btn.addEventListener("click", onButtonClick);
+      image2Btn.addEventListener("click", onButtonClick);
+      image3Btn.addEventListener("click", onButtonClick);    
+      
+      var execute = function(){
+        var start = new Date;
+        var ht = parseInt(htInput.value);
+        var lt = parseInt(ltInput.value);
+        var sigmma = parseFloat(sigmmaInput.value);
+        var kernelSize = parseInt(kernelSizeInput.value);
+        window.canny = CannyJS.canny(canvas1, ht, lt, sigmma, kernelSize);
+        canny.drawOn(canvas2);
+        finish = new Date;
+        duration = (finish-start)/1000;
+        console.log("Detection finished. Duration: "+duration+" seconds.");
+      }
+      executeBtn.addEventListener("click", execute);      
+      loadImage("ukiyo-e.png");
+    }    
+  </script>
+</head>
+
+<body>
+  <h1>Canny JS: A JavaScript Implementation of Canny Edge Detection</h1>
+  <div>
+    <label>Switch image:</label>
+    <button id="image1" value="ukiyo-e.png">Image 1</button>
+    <button id="image2" value="car.jpg">Image 2</button>
+    <button id="image3" value="valve.png">Image 3</button>
+  </div>
+  <div>
+    <label>high threshold (0-255):</label>
+    <input type="text" id="high-threshold" value="100"></input><br/>
+    <label>low threshold (0-255):</label>
+    <input type="text" id="low-threshold" value="50"></input><br/>
+    <label>sigmma (0.0-):</label>
+    <input type="text" id="sigmma" value="1.4"></input><br/>
+    <label>kernel size (odd number):</label>
+    <input type="text" id="kernelSize" value="3"></input><br/>
+    
+  <div/>
+  <div>
+    <button id="execute">Detect edges</button>
+  </div>  
+  <canvas id="canvas1" width="400px" height="600px"></canvas>
+  <canvas id="canvas2" width="400px" height="600px"></canvas>
+</body>
+</html>
